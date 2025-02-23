@@ -1,32 +1,35 @@
 
-<script>
-export default {
-  name: 'App',
-  data() {
-    return {
-      name: 'Erick Alexabder Barrera Ochoa',
-      status: 'pending',
-      tasks:['task 1', 'task 2', 'task 3'],
-      link: 'https://www.google.com'
-    };
-  },
-  methods: {
-    toogleStatus() {
-      if (this.status === 'active'){
-        this.status = 'pending'
-      } else if (this.status === 'pending'){
-        this.status = 'inactive'
+<script setup>
+import { ref } from 'vue';
+
+ 
+    const name = ref('Erick Alexander Barrera Ochoa');
+    const  status = ref('active');
+    const  tasks = ref(['task 1', 'task 2', 'task 3']);
+    const newTask = ref('');
+
+    const toogleStatus = () => {
+      if (status.value === 'active'){
+        status.value = 'pending'
+      } else if (status.value === 'pending'){
+        status.value = 'inactive'
       }else  {
-        this.status = 'active'
+        status.value = 'active'
       }
-    }
-  }
-}
+
+    };
+
+    
+ 
 </script>
 
 
 <template>
   <H1>{{ name }}</H1>
+  <form @submit.prevent="addTask">
+    <label for="newTask">Add Task</label>
+    <input type="text" id="newTask" v-model="newTask">
+  </form>
   <p v-if="status === 'active'">User is active</p>
   <p v-else-if="status === 'pending'">User is pending</p>
   <p v-else>User in active</p>
@@ -39,7 +42,6 @@ export default {
 
     
   </ul>
-  <a :href="link">click Google</a>
 
 
   <button v-on:click="toogleStatus">Change status</button>
